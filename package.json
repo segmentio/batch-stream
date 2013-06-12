@@ -1,0 +1,28 @@
+{
+  "name": "batch-stream",
+  "version": "0.0.1",
+  "description": "Transform a stream into batches",
+  "main": "lib/index",
+  "readmeFilename": "Readme.md",
+  "dependencies": {
+    "readable-stream": "~1.0.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/segmentio/batch-stream.git"
+  },
+  "keywords": [
+    "batch",
+    "stream",
+    "chunks",
+    "chunked"
+  ],
+  "author": "Segment.io <friends@segment.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/segmentio/batch-stream/issues"
+  }
+}
