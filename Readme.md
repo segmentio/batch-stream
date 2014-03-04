@@ -11,7 +11,7 @@ Will emit arrays, so that you can deal with pieces of input asynchronously.
 var batch = new BatchStream({
   size : 100,     // the size for each chunk
   timeout: 5000   // emit data after this amount of milliseconds
-                 // even if the size of buffered writes not reaching `size`
+                  // even if the size of buffered writes not reaching `size`
 });
 
 stream
@@ -22,7 +22,7 @@ stream
 
 This is also usefull when you want transform continuous writes into batches:
 
-Instead of:
+Suppose you have a `docs` stream, instead of:
 
 ```javascript
 docs.on('data', function(doc) {
@@ -39,8 +39,26 @@ var batch = new BatchStream({
   })
 })
 
-docs.on('data', function(doc) {
-  batch.write(doc)
+docs.pipe(batch)
+.on('finish', function() {
+  console.log('All doc inserted.')
+})
+```
+
+Note that by passing a `options.transform` to the constructor, instead of
+listening on `data` events, the insertions are ensured to be sequential.
+
+If insertions are allowed to happen parrallelly:
+
+```javascript
+var batch = new BatchStream()
+
+docs.pipe(batch)
+.on('data', function(items) {
+  db.bulkInsert(items, ...)
+})
+.on('finish', function() {
+  console.log('All docs queued for insertion.')
 })
 ```
 

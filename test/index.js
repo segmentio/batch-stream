@@ -1,6 +1,7 @@
 require('should')
 
 var after = require('after')
+var fs = require('fs')
 var BatchStream = require('../')
 
 describe('BatchStream', function() {
@@ -67,7 +68,7 @@ describe('BatchStream', function() {
       size: 3,
       transform: function(items, callback) {
         transformed.push(items)
-        callback()
+        process.nextTick(callback)
       }
     })
     var expected = [ [0,1,2], [3,4,5], [6,7] ]
@@ -75,7 +76,7 @@ describe('BatchStream', function() {
     batch.on('data', function(data) {
       got.push(data)
     })
-    batch.on('finish', function() {
+    batch.on('end', function() {
       got.should.eql(expected)
       got.should.eql(transformed)
       done()
@@ -84,5 +85,14 @@ describe('BatchStream', function() {
       batch.write(i)
     }
     batch.end()
+  })
+  it('can pipe and emit events', function(done) {
+    var st = fs.createReadStream(__dirname + '/mocha.opts')
+    var batch = new BatchStream()
+    st.pipe(batch).on('finish', function() {
+      done()
+    }).on('data', function(data) {
+      data.should.be.instanceof(Array)
+    })
   })
 })

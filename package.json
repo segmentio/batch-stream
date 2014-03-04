@@ -1,6 +1,6 @@
 {
   "name": "batch-stream2",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Transform a stream into batches, with custom async operation before emitting data",
   "dependencies": {
     "readable-stream": "~1.0.2"
