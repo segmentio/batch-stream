@@ -7,7 +7,8 @@ module.exports = BatchStream
 
 function BatchStream(options) {
   options || (options = {})
-  stream.Transform.call(this, { objectMode : true })
+  options.objectMode = true
+  stream.Transform.call(this, options)
   this.size  = options.size || 100
   this.timeout = 'timeout' in options ? options.timeout : 5000
   this._prepare = options.transform || transform

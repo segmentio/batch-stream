@@ -62,6 +62,34 @@ docs.pipe(batch)
 })
 ```
 
+In this case, you can use [options.highWaterMark](http://nodejs.org/api/stream.html#stream_new_stream_writable_options)
+to control maximum concurrencies.
+
+Consider the code:
+
+```javascript
+var batch = new BatchStream({
+  highWaterMark: 2
+})
+var docs = new DbReadStream()
+
+docs.on('data', function(doc) {
+  var completed = batch.write(doc)
+  if (!completed) {
+    // water too high, pause read stream
+    docs.pause()
+    batch.once('drain', function() {
+      docs.resume()
+    })
+  }
+})
+
+batch.on('data', function(items) {
+  db.bulkInsert(items, ...)
+})
+```
+
+
 ## License
 
 the MIT license.
