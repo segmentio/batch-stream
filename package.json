@@ -1,11 +1,12 @@
 {
-  "name": "batch-stream",
-  "version": "0.0.1",
-  "description": "Transform a stream into batches",
-  "main": "lib/index",
-  "readmeFilename": "Readme.md",
+  "name": "batch-stream2",
+  "version": "0.1.3",
+  "description": "Transform a stream into batches, with custom async operation before emitting data",
   "dependencies": {
     "readable-stream": "~1.0.2"
+  },
+  "devDependencies": {
+    "after": "*"
   },
   "scripts": {
     "test": "mocha"
