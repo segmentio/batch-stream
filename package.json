@@ -5,7 +5,7 @@
   "main": "lib/index",
   "readmeFilename": "Readme.md",
   "dependencies": {
-    "readable-stream": "~1.0.2"
+    "readable-stream": "~1.1.14"
   },
   "scripts": {
     "test": "mocha"
